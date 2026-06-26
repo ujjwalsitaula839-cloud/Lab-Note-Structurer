@@ -1,71 +1,90 @@
-# Lab Note Structurer
+# LabNote / Structurer
 
-Lab Note Structurer is an intelligent prototype web application that parses digital lab notebooks in PDF format, extracts their text, and passes it to Anthropic's Claude Haiku model. The system reorganizes raw notes into a structured, human-readable draft containing title, methodology, observations, results, conclusions, and uncertainty flags. All outputs are intended as initial drafts for human verification and editing.
+LabNote Structurer is a professional scientific utility designed to parse digital laboratory notebooks in PDF format, extract raw text, and organize it into structured, standard scientific reports. Utilizing high-performance open-weight models via the **Groq API** (`llama-3.3-70b-versatile`), it converts unstructured notes into publication-ready drafts containing inferred title, methodology, observations, results, conclusions, and flags for experimental uncertainties.
 
-## Prerequisites
-
-Ensure you have the following software installed:
-- **Node.js** (v18 or higher recommended)
-- **Python** (v3.9 or higher)
-- **Anthropic API Key** (to access Claude Haiku)
+All outputs are presented in a unified document reading console with a one-click **Copy to Markdown** feature for seamless integration into digital lab notebooks (like Obsidian, Notion, or LaTeX).
 
 ---
 
-## Backend Setup & Execution
+## Features
 
-1. Navigate to the backend directory:
+* **PDF Parsing**: Automated digital text extraction utilizing `pdfplumber`.
+* **Structured Llama-3.3 Analysis**: Deep text structuring through the Groq SDK, outputting valid structured JSON.
+* **Unified Document Reading UI**: A clean, distraction-free document interface designed for researchers.
+* **Markdown Export**: Direct clipboard copy formatted in clean markdown template notation.
+* **Sleek Uploader Console**: Drag-and-drop file uploader with size indicators and validation.
+* **Safe Configuration**: Pre-configured root `.gitignore` to prevent sensitive credentials and environment folders from leaking to GitHub.
+
+---
+
+## Technical Stack
+
+* **Backend**: FastAPI (Python), Uvicorn, pdfplumber, Groq Client.
+* **Frontend**: React (TypeScript), Vite, Tailwind CSS.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+* **Node.js** (v18 or higher)
+* **Python** (v3.9 or higher)
+* **Groq API Key**
+
+---
+
+### Backend Configuration
+
+1. **Navigate to the backend directory**:
    ```bash
    cd backend
    ```
 
-2. Create a virtual environment and activate it:
-   - **Windows (PowerShell):**
+2. **Create a virtual environment and activate it**:
+   * **Windows (PowerShell):**
      ```powershell
      python -m venv venv
      .\venv\Scripts\Activate.ps1
      ```
-   - **macOS / Linux:**
+   * **macOS / Linux:**
      ```bash
      python3 -m venv venv
      source venv/bin/activate
      ```
 
-3. Install required Python packages:
+3. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Create and configure your environment variables:
-   - Copy `.env.example` to `.env`:
-     ```bash
-     cp .env.example .env
-     ```
-   - Open `.env` and configure your Anthropic API Key:
-     ```env
-     ANTHROPIC_API_KEY=your_actual_anthropic_api_key
-     ```
+4. **Environment Variables**:
+   Create a `.env` file inside the `backend` folder and add your key:
+   ```env
+   GROQ_API_KEY=your_actual_groq_api_key
+   ```
 
-5. Run the FastAPI development server:
+5. **Start the FastAPI server**:
    ```bash
    uvicorn main:app --reload --port 8000
    ```
-   The backend server will run at `http://localhost:8000`.
+   The backend server runs at `http://localhost:8000`.
 
 ---
 
-## Frontend Setup & Execution
+### Frontend Configuration
 
-1. Navigate to the frontend directory:
+1. **Navigate to the frontend directory**:
    ```bash
    cd frontend
    ```
 
-2. Install the frontend npm packages:
+2. **Install dependencies**:
    ```bash
    npm install
    ```
 
-3. Start the Vite React development server:
+3. **Start the development server**:
    ```bash
    npm run dev
    ```
@@ -73,22 +92,31 @@ Ensure you have the following software installed:
 
 ---
 
-## Example JSON Output Schema
+## Deploying / Committing to GitHub
 
-When a document is structured, the Claude model returns a JSON payload matching this structure:
+To initialize Git and push the project to your GitHub repository:
 
-```json
-{
-  "title": "Synthesis of Bismuth Nanoparticles in Aqueous Medium",
-  "methodology": "Dissolved 0.5g Bi(NO3)3 in 50 mL deionized water under magnetic stirring. Added 10 mL of 0.1M NaBH4 dropwise at room temperature. The solution immediately changed color from clear to black, indicating nanoparticle formation.",
-  "observations": "Exothermic behavior observed during NaBH4 drop addition. Temp rose from 22°C to 28.5°C. Black precipitate formed rapidly. Magnetic stirring rate kept at 400 rpm.",
-  "results": "Obtained 0.32g of black bismuth powder after washing with ethanol and drying in vacuum at 50°C. UV-vis absorption spectrum shows a broad peak at approximately 275 nm.",
-  "conclusions": "Successfully synthesized bismuth nanoparticles in aqueous medium. The yield was approximately 64%. Future experiments should investigate stabilizing agents to prevent aggregation.",
-  "confidence_note": "No XRD analysis was performed to verify crystalline phase; purity and size are inferred from optical spectrum only."
-}
-```
+1. **Initialize Git repository**:
+   Run this in the project root folder (`lab-note-structurer`):
+   ```bash
+   git init
+   ```
 
----
+2. **Stage your files**:
+   (The root-level `.gitignore` will automatically prevent committing `.env`, `node_modules`, and your virtual environment folder)
+   ```bash
+   git add .
+   ```
 
-## Prototype Notice
-**Important:** This application is a prototype. All structured outputs and document summaries are generated by artificial intelligence and must be reviewed, edited, and approved by a qualified researcher before finalization.
+3. **Create the initial commit**:
+   ```bash
+   git commit -m "Initial commit: Redesigned LabNote Structurer with Groq integration"
+   ```
+
+4. **Link and push to GitHub**:
+   Replace the placeholder URL with your actual GitHub repository URL:
+   ```bash
+   git branch -M main
+   git remote add origin https://github.com/yourusername/your-repo-name.git
+   git push -u origin main
+   ```
